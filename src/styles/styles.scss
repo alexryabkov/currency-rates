@@ -1,0 +1,12 @@
+/* UIKit */
+@import "variables-theme.scss";
+@import "mixins-theme.scss";
+@import "uikit-theme.scss";
+
+.rate-up svg polygon {
+  fill: green;
+}
+
+.rate-down svg polygon {
+  fill: red;
+}
