@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { Currency } from 'src/app/Currency';
 
 @Component({
   selector: 'app-currency-item',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./currency-item.component.scss'],
 })
 export class CurrencyItemComponent implements OnInit {
-  @Input() currencyName: string = '';
+  @Input() currency: Currency = { name: '', visible: false };
 
   constructor() {}
 
