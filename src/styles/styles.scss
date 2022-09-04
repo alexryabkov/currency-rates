@@ -10,3 +10,23 @@
 .rate-down svg polygon {
   fill: red;
 }
+
+.add-currency-btn svg {
+  & circle {
+    fill: green;
+    stroke: none;
+  }
+  & line {
+    stroke: white;
+  }
+}
+
+.remove-currency-btn svg {
+  & circle {
+    fill: red;
+    stroke: none;
+  }
+  & line {
+    stroke: white;
+  }
+}
