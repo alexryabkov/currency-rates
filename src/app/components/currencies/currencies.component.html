@@ -6,6 +6,10 @@
 >
 </app-currency-item> -->
 
-<div class="uk-container uk-margin-medium-top">
-  <app-currency-item> </app-currency-item>
+<div
+  class="uk-container uk-margin-medium-top"
+  *ngFor="let currency of currencies"
+>
+  <app-currency-item *ngIf="currency.visible" [currencyName]="currency.name">
+  </app-currency-item>
 </div>
