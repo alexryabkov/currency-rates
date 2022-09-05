@@ -1,8 +1,8 @@
-<a
-  href=""
+<div
   tabindex="0"
   class="uk-animation-toggle uk-link-reset"
   [ngClass]="isAddButton ? 'add-currency-btn' : 'remove-currency-btn'"
+  (click)="onClick()"
 >
   <span
     [attr.uk-tooltip]="
@@ -17,4 +17,4 @@
         : 'icon: minus-circle; ratio: 1.2'
     "
   ></span>
-</a>
+</div>
