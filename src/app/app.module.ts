@@ -6,7 +6,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { CurrencyItemComponent } from './components/currency-item/currency-item.component';
 import { CurrenciesComponent } from './components/currencies/currencies.component';
 import { DateTimeComponent } from './components/date-time/date-time.component';
-import { ActionButtonComponent } from './components/action-button/action-button.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +14,9 @@ import { ActionButtonComponent } from './components/action-button/action-button.
     CurrencyItemComponent,
     CurrenciesComponent,
     DateTimeComponent,
-    ActionButtonComponent
   ],
-  imports: [
-    BrowserModule
-  ],
+  imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

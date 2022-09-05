@@ -12,12 +12,12 @@
         ></span>
         <span>(+0.02)</span>
       </div>
-      <app-action-button
-        class="uk-margin-medium-left"
-        [isAddButton]="false"
-        (btnClick)="onRemove(currency)"
-      >
-      </app-action-button>
+      <span
+        uk-tooltip="title: Remove Currency; pos: top"
+        class="remove-currency-btn uk-preserve uk-margin-medium-left"
+        uk-icon="icon: minus-circle; ratio: 1.2"
+        (click)="onRemove(currency)"
+      ></span>
     </div>
   </div>
   <hr />
