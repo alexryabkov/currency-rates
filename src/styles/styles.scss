@@ -11,22 +11,20 @@
   fill: red;
 }
 
-.add-currency-btn svg {
-  & circle {
-    fill: green;
-    stroke: none;
-  }
-  & line {
-    stroke: white;
+.add-currency-btn,
+.remove-currency-btn {
+  cursor: pointer;
+  & svg {
+    & circle {
+      fill: green;
+      stroke: none;
+    }
+    & line {
+      stroke: white;
+    }
   }
 }
 
-.remove-currency-btn svg {
-  & circle {
-    fill: red;
-    stroke: none;
-  }
-  & line {
-    stroke: white;
-  }
+.remove-currency-btn svg circle {
+  fill: red;
 }
