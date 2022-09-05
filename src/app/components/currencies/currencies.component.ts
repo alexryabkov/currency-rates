@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CURRENCIES } from 'src/app/currencies';
+import { CurrencyService } from 'src/app/services/currency.service';
 import { Currency } from 'src/app/Currency';
 @Component({
   selector: 'app-currencies',
@@ -7,9 +7,16 @@ import { Currency } from 'src/app/Currency';
   styleUrls: ['./currencies.component.scss'],
 })
 export class CurrenciesComponent implements OnInit {
-  currencies: Currency[] = CURRENCIES;
+  currencies: Currency[] = [];
 
-  constructor() {}
+  constructor(private currencyService: CurrencyService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currencies = this.currencyService.getCurrencies();
+  }
+
+  removeCurrency(currency: Currency): void {
+    console.log(`Remove currency ${currency.name}`);
+    this.currencyService.removeCurrency(currency);
+  }
 }
