@@ -1,0 +1,11 @@
+#show-currencies-btn,
+#hide-currencies-btn {
+  cursor: pointer;
+  &:hover {
+    transform: scale(0.9);
+    transition: 0.2s ease;
+  }
+  &:active * {
+    fill: lightgrey;
+  }
+}
