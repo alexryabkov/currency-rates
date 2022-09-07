@@ -5,7 +5,7 @@ import { CurrencyInfo } from 'src/app/types/currency-info';
 import { FetchedCurrencyData } from 'src/app/types/fetched-currency-data';
 import { MAIN_CURRENCIES } from 'src/app/currency-data';
 import { CurrencyNames } from 'src/app/types/currency-names';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-currencies',
