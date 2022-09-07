@@ -4,6 +4,7 @@ import { Observable, Subject, timer, retry, share } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { FetchedCurrencyData } from 'src/app/types/fetched-currency-data';
 import { ALL_CURRENCIES, BASE_CURRENCY } from '../currency-data';
+import { environment } from 'src/environments/environment';
 
 const INTERVAL = 5000;
 const httpOptions = {
@@ -11,7 +12,7 @@ const httpOptions = {
     .set('base', BASE_CURRENCY)
     .set('currencies', ALL_CURRENCIES.join(',')),
   headers: new HttpHeaders({
-    'X-RapidAPI-Key': '<apiKey>',
+    'X-RapidAPI-Key': environment.apiKey,
     'X-RapidAPI-Host': 'currency-converter-pro1.p.rapidapi.com',
   }),
 };
