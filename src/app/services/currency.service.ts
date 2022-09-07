@@ -11,11 +11,11 @@ const INTERVAL = 5000;
   providedIn: 'root',
 })
 export class CurrencyService implements OnDestroy {
-  private currencies$: Observable<FetchedCurrencyData>;
+  private currencies: Observable<FetchedCurrencyData>;
   private stopPolling = new Subject<void>();
 
   constructor(private http: HttpClient) {
-    this.currencies$ = timer(0, INTERVAL).pipe(
+    this.currencies = timer(0, INTERVAL).pipe(
       switchMap(() =>
         this.http.get<FetchedCurrencyData>('http://localhost:5000/currencies')
       ),
@@ -26,7 +26,7 @@ export class CurrencyService implements OnDestroy {
   }
 
   getCurrencies(): Observable<FetchedCurrencyData> {
-    return this.currencies$;
+    return this.currencies;
   }
 
   ngOnDestroy() {
