@@ -1,8 +1,9 @@
 export interface FetchedCurrencyData {
   success: boolean;
   timestamp: number;
-  source: string;
-  quotes: {
+  date: string;
+  base: string;
+  result: {
     [key: string]: number;
   };
 }
