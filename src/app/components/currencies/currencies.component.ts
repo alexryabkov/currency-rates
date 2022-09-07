@@ -15,19 +15,26 @@ import { Observable, Subject, Subscription } from 'rxjs';
 export class CurrenciesComponent implements OnDestroy {
   currencies: CurrencyInfo[] = [];
   mainCurrencies: CurrencyNames[] = MAIN_CURRENCIES;
-  showExtraCurrencies: Observable<boolean>;
-  currSubscription: Subscription;
+  showExtraCurrencies: boolean = false;
+  subscriptions: Subscription = new Subscription();
 
   constructor(
     private currencyService: CurrencyService,
     private uiService: UiService
   ) {
-    this.showExtraCurrencies = this.uiService.onToggle();
-    this.currSubscription = this.currencyService
-      .getCurrencies()
-      .subscribe(
-        (currData) => (this.currencies = this.processCurrencyData(currData))
-      );
+    this.subscriptions.add(
+      this.currencyService
+        .getCurrencies()
+        .subscribe(
+          (currData) => (this.currencies = this.processCurrencyData(currData))
+        )
+    );
+
+    this.subscriptions.add(
+      this.uiService
+        .onToggle()
+        .subscribe((value) => (this.showExtraCurrencies = value))
+    );
   }
 
   processCurrencyData(currData: FetchedCurrencyData): CurrencyInfo[] {
@@ -35,8 +42,7 @@ export class CurrenciesComponent implements OnDestroy {
     const rates: [string, number][] = Object.entries(currData.quotes);
     const processedData: CurrencyInfo[] = [];
 
-    console.log(this.currencies);
-
+    console.log('Process data...');
     for (const [curr, exchRate] of rates) {
       const name = curr.replace(sourceCurrency, '') as CurrencyNames;
       processedData.push({
@@ -51,6 +57,6 @@ export class CurrenciesComponent implements OnDestroy {
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.currSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
