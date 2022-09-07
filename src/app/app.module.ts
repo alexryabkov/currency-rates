@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { CurrencyItemComponent } from './components/currency-item/currency-item.component';
 import { CurrenciesComponent } from './components/currencies/currencies.component';
 import { DateTimeComponent } from './components/date-time/date-time.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { DateTimeComponent } from './components/date-time/date-time.component';
     CurrenciesComponent,
     DateTimeComponent,
   ],
-  imports: [BrowserModule],
+  imports: [BrowserModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
