@@ -1,24 +1,16 @@
-<div *ngIf="currency.visible">
+<div class="uk-flex uk-flex-between no-select">
+  <div>{{ currency.name }}</div>
   <div class="uk-flex uk-flex-between">
-    <div>{{ currency.name }}</div>
-    <div class="uk-flex uk-flex-between">
-      <div
-        class="currency-data uk-padding-small uk-padding-remove-top uk-padding-remove-bottom"
-      >
-        <span>60.94</span>
-        <span
-          class="rate-up uk-margin-small-left uk-preserve"
-          uk-icon="icon: triangle-up; ratio: 1.2"
-        ></span>
-        <span>(+0.02)</span>
-      </div>
+    <div
+      class="currency-data uk-padding-small uk-padding-remove-top uk-padding-remove-bottom"
+    >
+      <span>{{ currency.exchangeRate }}</span>
       <span
-        uk-tooltip="title: Remove Currency; pos: top"
-        class="remove-currency-btn uk-preserve uk-margin-medium-left"
-        uk-icon="icon: minus-circle; ratio: 1.2"
-        (click)="onRemove(currency)"
+        class="rate-up uk-margin-small-left uk-preserve"
+        uk-icon="icon: triangle-up; ratio: 1.2"
       ></span>
+      <span>({{ currency.rateChange.toFixed(2) }})</span>
     </div>
   </div>
-  <hr />
 </div>
+<hr />

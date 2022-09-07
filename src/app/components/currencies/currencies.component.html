@@ -1,8 +1,9 @@
 <div class="uk-container uk-margin-medium-top">
-  <app-currency-item
-    *ngFor="let currency of currencies"
-    [currency]="currency"
-    (onRemoveCurrency)="removeCurrency(currency)"
-  >
-  </app-currency-item>
+  <ng-container *ngFor="let currency of currencies">
+    <app-currency-item
+      *ngIf="mainCurrencies.includes(currency.name) || showExtraCurrencies"
+      [currency]="currency"
+    >
+    </app-currency-item>
+  </ng-container>
 </div>
