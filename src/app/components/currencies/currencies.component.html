@@ -1,7 +1,9 @@
 <div class="uk-container uk-margin-medium-top">
   <ng-container *ngFor="let currency of currencies">
     <app-currency-item
-      *ngIf="mainCurrencies.includes(currency.name) || showExtraCurrencies"
+      *ngIf="
+        mainCurrencies.includes(currency.name) || (showExtraCurrencies | async)
+      "
       [currency]="currency"
     >
     </app-currency-item>

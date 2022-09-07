@@ -1,9 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FetchedCurrencyData } from 'src/app/types/fetched-currency-data';
 import { Observable, Subject, timer, retry, share } from 'rxjs';
-
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { FetchedCurrencyData } from 'src/app/types/fetched-currency-data';
+import { ALL_CURRENCIES } from '../currency-data';
 
 const INTERVAL = 5000;
 
