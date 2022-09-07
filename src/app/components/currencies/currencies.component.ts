@@ -3,7 +3,7 @@ import { CurrencyService } from 'src/app/services/currency.service';
 import { UiService } from 'src/app/services/ui.service';
 import { CurrencyInfo } from 'src/app/types/currency-info';
 import { FetchedCurrencyData } from 'src/app/types/fetched-currency-data';
-import { MAIN_CURRENCIES } from 'src/app/currency-data';
+import { ALL_CURRENCIES, MAIN_CURRENCIES } from 'src/app/currency-data';
 import { CurrencyNames } from 'src/app/types/currency-names';
 import { Subscription } from 'rxjs';
 
@@ -38,11 +38,19 @@ export class CurrenciesComponent implements OnDestroy {
   }
 
   processCurrencyData(currData: FetchedCurrencyData): CurrencyInfo[] {
+    console.log('Fetched Data', currData);
     const rates: [string, number][] = Object.entries(currData.result);
     const processedData: CurrencyInfo[] = [];
 
     for (const [curr, exchRate] of rates) {
       const name = curr as CurrencyNames;
+      if (!ALL_CURRENCIES.includes(name)) {
+        console.error(
+          `Data Fetching Error: Currency ${name} in not in the list ` +
+            `of allowed currencies (${ALL_CURRENCIES.join(', ')})`
+        );
+        continue;
+      }
       processedData.push({
         name,
         exchangeRate: Math.round((1 / exchRate) * 1e2) / 1e2,

@@ -1,5 +1,7 @@
 import { CurrencyNames } from './types/currency-names';
 
+export const BASE_CURRENCY = CurrencyNames.RUB;
+
 export const ALL_CURRENCIES = [
   CurrencyNames.USD,
   CurrencyNames.EUR,
