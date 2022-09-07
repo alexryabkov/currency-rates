@@ -38,13 +38,11 @@ export class CurrenciesComponent implements OnDestroy {
   }
 
   processCurrencyData(currData: FetchedCurrencyData): CurrencyInfo[] {
-    const sourceCurrency = currData.source;
-    const rates: [string, number][] = Object.entries(currData.quotes);
+    const rates: [string, number][] = Object.entries(currData.result);
     const processedData: CurrencyInfo[] = [];
 
-    console.log('Process data...');
     for (const [curr, exchRate] of rates) {
-      const name = curr.replace(sourceCurrency, '') as CurrencyNames;
+      const name = curr as CurrencyNames;
       processedData.push({
         name,
         exchangeRate: Math.round((1 / exchRate) * 1e2) / 1e2,
