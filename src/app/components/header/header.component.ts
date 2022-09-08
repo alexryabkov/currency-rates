@@ -8,6 +8,7 @@ import { UiService } from 'src/app/services/ui.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  title: string = 'Currency Rates to RUB';
   showExtraCurrencies: boolean = false;
   subscription: Subscription;
 
