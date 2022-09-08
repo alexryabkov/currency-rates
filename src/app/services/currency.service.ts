@@ -22,8 +22,7 @@ const httpOptions = {
 export class CurrencyService implements OnDestroy {
   private currencies: Observable<FetchedCurrencyData>;
   private stopPolling = new Subject<void>();
-  private apiUrl =
-    'https://currency-converter-pro1.p.rapidapi.com/latest-rates';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {
     this.currencies = timer(0, INTERVAL).pipe(
