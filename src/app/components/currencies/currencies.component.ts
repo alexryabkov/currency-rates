@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class CurrenciesComponent implements OnDestroy {
   currencies: CurrencyInfo[] = [];
+  allCurrencies: CurrencyNames[] = ALL_CURRENCIES;
   mainCurrencies: CurrencyNames[] = MAIN_CURRENCIES;
   showExtraCurrencies: boolean = false;
   subscriptions: Subscription = new Subscription();
@@ -26,7 +27,8 @@ export class CurrenciesComponent implements OnDestroy {
       this.currencyService
         .getCurrencies()
         .subscribe(
-          (currData) => (this.currencies = this.processCurrencyData(currData))
+          (data) =>
+            (this.currencies = this.processCurrencyData(data, this.currencies))
         )
     );
 
@@ -37,25 +39,36 @@ export class CurrenciesComponent implements OnDestroy {
     );
   }
 
-  processCurrencyData(currData: FetchedCurrencyData): CurrencyInfo[] {
-    console.log('Fetched Data', currData);
-    const rates: [string, number][] = Object.entries(currData.result);
+  processCurrencyData(
+    fetchedData: FetchedCurrencyData,
+    currentData: CurrencyInfo[]
+  ): CurrencyInfo[] {
+    console.log('- Fetched Data:', fetchedData);
+    console.log('- Current Data:', currentData);
+
+    const rates: [string, number][] = Object.entries(fetchedData.result);
     const processedData: CurrencyInfo[] = [];
 
-    for (const [curr, exchRate] of rates) {
+    for (const [curr, newRate] of rates) {
       const name = curr as CurrencyNames;
-      if (!ALL_CURRENCIES.includes(name)) {
+
+      if (!this.allCurrencies.includes(name)) {
         console.error(
-          `Data Fetching Error: Currency ${name} in not in the list ` +
-            `of allowed currencies (${ALL_CURRENCIES.join(', ')})`
+          `- Data Fetching Error: Currency ${name} in not in the list ` +
+            `of allowed currencies (${this.allCurrencies.join(', ')})`
         );
         continue;
       }
-      processedData.push({
-        name,
-        exchangeRate: Math.round((1 / exchRate) * 1e2) / 1e2,
-        rateChange: 0.0,
-      });
+
+      const exchangeRate = Math.round((1 / newRate) * 1e2) / 1e2;
+
+      let rateChange = 0;
+      if (currentData.length > 0) {
+        const currency = currentData.filter((curr) => curr.name === name)[0];
+        rateChange = exchangeRate - currency.exchangeRate;
+      }
+
+      processedData.push({ name, exchangeRate, rateChange });
     }
     return processedData;
   }

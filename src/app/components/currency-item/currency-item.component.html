@@ -1,15 +1,32 @@
-<div class="uk-flex uk-flex-between no-select">
+<div class="uk-flex uk-flex-between no-select currency-item">
   <div>{{ currency.name }}</div>
   <div class="uk-flex uk-flex-between">
     <div
-      class="currency-data uk-padding-small uk-padding-remove-top uk-padding-remove-bottom"
+      class="uk-padding-small uk-padding-remove-top uk-padding-remove-bottom"
     >
       <span>{{ currency.exchangeRate.toFixed(2) }}</span>
-      <span
-        class="rate-up uk-margin-small-left uk-preserve"
-        uk-icon="icon: triangle-up; ratio: 1.2"
-      ></span>
-      <span>({{ currency.rateChange.toFixed(2) }})</span>
+      <ng-container *ngIf="currency.rateChange >= 0; else rateDown">
+        <svg
+          class="uk-margin-small-left"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <polygon class="rate-up-arrow" points="5 13 10 8 15 13"></polygon>
+        </svg>
+        <span class="rate-up"
+          >({{ "+" + currency.rateChange.toFixed(2) }})</span
+        >
+      </ng-container>
+      <ng-template #rateDown>
+        <svg
+          class="uk-margin-small-left"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <polygon class="rate-down-arrow" points="5 7 15 7 10 12"></polygon>
+        </svg>
+        <span class="rate-down">({{ currency.rateChange.toFixed(2) }})</span>
+      </ng-template>
     </div>
   </div>
 </div>
