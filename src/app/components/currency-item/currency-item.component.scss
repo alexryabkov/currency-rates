@@ -3,7 +3,7 @@ $rate-down-color: #cc0000;
 
 .currency-item {
   font-family: "Roboto Mono", monospace;
-  font-size: 1.05rem;
+  font-size: 1.3rem;
 }
 
 svg {
@@ -22,7 +22,7 @@ svg {
 .rate,
 .rate-up,
 .rate-down {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 .rate-up-arrow {
@@ -35,4 +35,6 @@ svg {
 
 .hidden-elem {
   visibility: hidden;
+  width: 24px;
+  display: inline-block;
 }
