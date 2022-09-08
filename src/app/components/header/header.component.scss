@@ -1,10 +1,24 @@
 #show-currencies-btn,
 #hide-currencies-btn {
   cursor: pointer;
+  width: 36px;
+  height: 36px;
+
+  & circle {
+    stroke: #fff;
+    stroke-width: 1.1px;
+  }
+
+  & line {
+    fill: none;
+    stroke: #fff;
+  }
+
   &:hover {
     transform: scale(0.9);
     transition: 0.2s ease;
   }
+
   &:active * {
     fill: lightgrey;
   }
