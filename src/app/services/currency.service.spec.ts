@@ -32,7 +32,7 @@ describe('CurrencyService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('#requestCurrencyData should send proper GET request', () => {
+  it('#requestCurrencyData() should send proper GET request', () => {
     service.requestCurrencyData().subscribe();
 
     const testRequest = backend.expectOne(
@@ -46,7 +46,7 @@ describe('CurrencyService', () => {
     testRequest.flush({});
   });
 
-  it('#requestCurrencyData should get proper data', () => {
+  it('#requestCurrencyData() should get proper data', () => {
     const timestamp = Date.now();
     const params = new HttpParams()
       .set('base', BASE_CURRENCY)

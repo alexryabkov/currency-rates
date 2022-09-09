@@ -14,13 +14,13 @@ describe('UiService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('#toggleExtraCurrencies should toggle #showExtraCurrencies false<->true', () => {
+  it('#toggleExtraCurrencies() should toggle #showExtraCurrencies false<->true', () => {
     service['showExtraCurrencies'] = false;
     service.toggleExtraCurrencies();
     expect(service['showExtraCurrencies']).toBe(true);
   });
 
-  it('#toggleExtraCurrencies should toggle #showExtraCurrencies true<->false', () => {
+  it('#toggleExtraCurrencies() should toggle #showExtraCurrencies true<->false', () => {
     service['showExtraCurrencies'] = true;
     service.toggleExtraCurrencies();
     expect(service['showExtraCurrencies']).toBe(false);
