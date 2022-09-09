@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apiKey: '123456',
   apiUrl: 'http://localhost:5000/currencies',
+  apiHost: 'currency-converter-pro1.p.rapidapi.com',
 };
 
 /*

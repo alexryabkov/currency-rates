@@ -13,7 +13,7 @@ const httpOptions = {
     .set('currencies', ALL_CURRENCIES.join(',')),
   headers: new HttpHeaders({
     'X-RapidAPI-Key': environment.apiKey,
-    'X-RapidAPI-Host': 'currency-converter-pro1.p.rapidapi.com',
+    'X-RapidAPI-Host': environment.apiHost,
   }),
 };
 @Injectable({
