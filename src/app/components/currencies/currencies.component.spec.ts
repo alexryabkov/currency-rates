@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { CurrenciesComponent } from './currencies.component';
 
@@ -8,9 +9,9 @@ describe('CurrenciesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CurrenciesComponent ]
-    })
-    .compileComponents();
+      declarations: [CurrenciesComponent],
+      imports: [HttpClientTestingModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CurrenciesComponent);
     component = fixture.componentInstance;
