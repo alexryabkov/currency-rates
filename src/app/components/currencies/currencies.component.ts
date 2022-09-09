@@ -16,8 +16,8 @@ export class CurrenciesComponent implements OnDestroy {
   currencies: CurrencyInfo[] = [];
   allCurrencies: CurrencyNames[] = ALL_CURRENCIES;
   mainCurrencies: CurrencyNames[] = MAIN_CURRENCIES;
-  showExtraCurrencies: boolean = false;
-  subscriptions: Subscription = new Subscription();
+  showExtraCurrencies = false;
+  subscriptions = new Subscription();
 
   constructor(
     private currencyService: CurrencyService,
@@ -64,7 +64,9 @@ export class CurrenciesComponent implements OnDestroy {
 
       let rateChange = 0;
       if (currentData.length > 0) {
-        const currency = currentData.filter((curr) => curr.name === name)[0];
+        const currency: CurrencyInfo = currentData.filter(
+          (curr) => curr.name === name
+        )[0];
         rateChange = exchangeRate - currency.exchangeRate;
       }
 

@@ -22,7 +22,7 @@ const httpOptions = {
 export class CurrencyService implements OnDestroy {
   private currencies: Observable<FetchedCurrencyData>;
   private stopPolling = new Subject<void>();
-  private apiUrl = environment.apiUrl;
+  private apiUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) {
     this.currencies = timer(0, INTERVAL).pipe(

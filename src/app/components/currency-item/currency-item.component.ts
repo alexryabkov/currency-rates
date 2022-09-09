@@ -9,8 +9,8 @@ import { CurrencyNames } from 'src/app/types/currency-names';
 export class CurrencyItemComponent implements OnInit {
   @Input() currency: CurrencyInfo = {
     name: CurrencyNames.NONE,
-    exchangeRate: 0.0,
-    rateChange: 0.0,
+    exchangeRate: 0,
+    rateChange: 0,
   };
 
   constructor() {}
