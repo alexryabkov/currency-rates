@@ -26,7 +26,7 @@ export class CurrencyService implements OnDestroy {
 
   constructor(private http: HttpClient) {
     this.currencies = timer(0, INTERVAL).pipe(
-      switchMap(this.requestCurrencyData),
+      switchMap(() => this.requestCurrencyData()),
       retry(),
       share(),
       takeUntil(this.stopPolling)
@@ -34,6 +34,7 @@ export class CurrencyService implements OnDestroy {
   }
 
   requestCurrencyData(): Observable<FetchedCurrencyData> {
+    console.log('Requesting data from', this.apiUrl);
     return this.http.get<FetchedCurrencyData>(this.apiUrl, httpOptions);
   }
 

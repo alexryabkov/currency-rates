@@ -72,6 +72,8 @@ export class CurrenciesComponent implements OnDestroy {
 
       processedData.push({ name, exchangeRate, rateChange });
     }
+
+    console.log('- New Data:', processedData);
     return processedData;
   }
 
