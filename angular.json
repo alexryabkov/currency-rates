@@ -102,6 +102,9 @@
               "./node_modules/uikit/dist/js/uikit-icons.min.js"
             ]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
