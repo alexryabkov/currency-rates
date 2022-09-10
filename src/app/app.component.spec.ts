@@ -1,18 +1,23 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
+
 import { AppComponent } from './app.component';
-import { CurrenciesComponent } from './components/currencies/currencies.component';
-import { DateTimeComponent } from './components/date-time/date-time.component';
-import { HeaderComponent } from './components/header/header.component';
+
+@Component({ selector: 'app-header', template: '' })
+class HeaderStubComponent {}
+@Component({ selector: 'app-date-time', template: '' })
+class DateTimeStubComponent {}
+@Component({ selector: 'app-currencies', template: '' })
+class CurrenciesStubComponent {}
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        MockComponent(HeaderComponent),
-        MockComponent(DateTimeComponent),
-        MockComponent(CurrenciesComponent),
+        HeaderStubComponent,
+        DateTimeStubComponent,
+        CurrenciesStubComponent,
       ],
     }).compileComponents();
   });
