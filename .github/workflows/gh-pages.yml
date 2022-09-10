@@ -24,7 +24,7 @@ jobs:
       - name: Build
         env:
           CURRENCY_API_KEY: ${{ secrets.CURRENCY_API_KEY }}
-        run: build:prod
+        run: npm run build:prod
 
       - name: Deploy
         if: success()
