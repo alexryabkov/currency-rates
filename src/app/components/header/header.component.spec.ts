@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UiService } from 'src/app/services/ui.service';
 
 import { HeaderComponent } from './header.component';
 
@@ -10,6 +11,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
+      providers: [UiService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);
@@ -34,5 +36,27 @@ describe('HeaderComponent', () => {
     component.title = 'Test Title';
     fixture.detectChanges();
     expect(titleElem.textContent).toContain(component.title);
+  });
+
+  it('should have "Show Extra Currencies" button on first render', () => {
+    const showHideBtn = fixture.nativeElement.querySelector('svg');
+    expect(showHideBtn.getAttribute('uk-tooltip')).toContain(
+      'Show Extra Currencies'
+    );
+  });
+
+  it('should change button on #toggleExtraCurrencies()', () => {
+    component.toggleExtraCurrencies();
+    fixture.detectChanges();
+    let showHideBtn = fixture.nativeElement.querySelector('svg');
+    expect(showHideBtn.getAttribute('uk-tooltip')).toContain(
+      'Hide Extra Currencies'
+    );
+    component.toggleExtraCurrencies();
+    fixture.detectChanges();
+    showHideBtn = fixture.nativeElement.querySelector('svg');
+    expect(showHideBtn.getAttribute('uk-tooltip')).toContain(
+      'Show Extra Currencies'
+    );
   });
 });
