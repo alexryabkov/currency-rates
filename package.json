@@ -6,8 +6,10 @@
     "start": "ng serve",
     "config": "ts-node -O '{\"module\": \"commonjs\"}' ./config.index.ts",
     "build": "ng build",
+    "build:prod": "npm run config && ng build --configuration production --base-href https://alexryabkov.github.io/currency-rates/",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:headless": "ng test --watch=false --browsers=ChromeHeadlessCI"
   },
   "private": true,
   "dependencies": {
