@@ -1,9 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
-import {
-  HttpClientModule,
-  HttpRequest,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpRequest, HttpParams } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -20,7 +16,7 @@ describe('CurrencyService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HttpClientTestingModule],
+      imports: [HttpClientTestingModule],
     });
     service = TestBed.inject(CurrencyService);
     backend = TestBed.inject(HttpTestingController);
