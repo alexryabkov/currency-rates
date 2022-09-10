@@ -46,7 +46,7 @@ export class CurrenciesComponent implements OnDestroy {
     console.log('- Fetched Data:', fetchedData);
     console.log('- Current Data:', currentData);
 
-    const rates: [string, number][] = Object.entries(fetchedData.result);
+    const rates: [string, number][] = Object.entries(fetchedData.rates);
     const processedData: CurrencyInfo[] = [];
 
     for (const [curr, newRate] of rates) {

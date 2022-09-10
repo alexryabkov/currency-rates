@@ -8,7 +8,7 @@ const setRatesData = () => {
   const timestamp = Date.now();
   const date = new Date(timestamp).toISOString().split("T")[0];
   const base = "RUB";
-  const result = {
+  const rates = {
     USD: Math.random() * (0.015 - 0.017) + 0.017,
     // EUR: Math.random() * (0.015 - 0.017) + 0.017,
     EUR: 0.015,
@@ -18,7 +18,7 @@ const setRatesData = () => {
     TRY: Math.random() * (0.25 - 0.35) + 0.35,
   };
 
-  return { success, timestamp, date, base, result };
+  return { success, timestamp, date, base, rates };
 };
 
 // Set default middlewares (logger, static, cors and no-cache)

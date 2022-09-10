@@ -40,7 +40,7 @@ describe('CurrencyService', () => {
     );
     expect(testRequest.request.method).toBe('GET');
     expect(testRequest.request.params.get('base')).toBe(BASE_CURRENCY);
-    expect(testRequest.request.params.get('currencies')).toBe(
+    expect(testRequest.request.params.get('symbols')).toBe(
       ALL_CURRENCIES.join(',')
     );
     testRequest.flush({});
@@ -50,9 +50,9 @@ describe('CurrencyService', () => {
     const timestamp = Date.now();
     const params = new HttpParams()
       .set('base', BASE_CURRENCY)
-      .set('currencies', ALL_CURRENCIES.join(','));
+      .set('symbols', ALL_CURRENCIES.join(','));
     const url = `${environment.apiUrl}?${params.toString()}`;
-    const result = ALL_CURRENCIES.reduce(
+    const rates = ALL_CURRENCIES.reduce(
       (obj, key) => Object.assign(obj, { [key]: 10 }),
       {}
     );
@@ -61,7 +61,7 @@ describe('CurrencyService', () => {
       timestamp,
       date: new Date(timestamp).toISOString().split('T')[0],
       base: BASE_CURRENCY,
-      result,
+      rates,
     };
 
     service.requestCurrencyData().subscribe((next) => {

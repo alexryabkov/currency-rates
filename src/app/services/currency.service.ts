@@ -10,10 +10,9 @@ const INTERVAL = 5000;
 const httpOptions = {
   params: new HttpParams()
     .set('base', BASE_CURRENCY)
-    .set('currencies', ALL_CURRENCIES.join(',')),
+    .set('symbols', ALL_CURRENCIES.join(',')),
   headers: new HttpHeaders({
-    'X-RapidAPI-Key': environment.apiKey,
-    'X-RapidAPI-Host': environment.apiHost,
+    apikey: environment.apiKey,
   }),
 };
 @Injectable({

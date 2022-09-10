@@ -3,7 +3,7 @@ export interface FetchedCurrencyData {
   timestamp: number;
   date: string;
   base: string;
-  result: {
+  rates: {
     [key: string]: number;
   };
 }

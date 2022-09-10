@@ -6,7 +6,6 @@ export const environment = {
   production: false,
   apiKey: '123456',
   apiUrl: 'http://localhost:5000/currencies',
-  apiHost: '',
 };
 
 /*

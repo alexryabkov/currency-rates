@@ -7,7 +7,6 @@ const envConfigFile = `export const environment = {
   production: true,
   apiKey: '${process.env['CURRENCY_API_KEY']}',
   apiUrl: '${environment.apiUrl}',
-  apiHost: '${environment.apiHost}',
 };
 `;
 
