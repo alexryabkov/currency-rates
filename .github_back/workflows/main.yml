@@ -22,4 +22,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CURRENCY_API_KEY: ${{ secrets.CURRENCY_API_KEY }}
         run: |
-          npm run ng deploy --base-href=/currency-rates/
+          ng deploy --base-href=/currency-rates/
