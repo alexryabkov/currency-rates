@@ -1,0 +1,35 @@
+name: Github Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Setup
+        run: npm ci
+
+      - name: Test
+        run: npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+
+      - name: Build
+        env:
+          CURRENCY_API_KEY: ${{ secrets.CURRENCY_API_KEY }}
+        run: npm run config && ng build --configuration production --base-href https://alexryabkov.github.io/currency-rates/
+
+      - name: Deploy
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist/currency-rates
+          enable_jekyll: true
