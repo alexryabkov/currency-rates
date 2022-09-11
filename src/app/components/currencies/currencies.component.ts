@@ -54,7 +54,7 @@ export class CurrenciesComponent implements OnDestroy {
 
       if (!this.allCurrencies.includes(name)) {
         console.error(
-          `- Data Fetching Error: Currency ${name} in not in the list ` +
+          `- Data Fetching Error: Currency ${name} is not in the list ` +
             `of allowed currencies (${this.allCurrencies.join(', ')})`
         );
         continue;
