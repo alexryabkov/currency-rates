@@ -1,4 +1,10 @@
 <div class="uk-container uk-margin-medium-top">
+  <div
+    class="error-msg uk-text-bold uk-margin-medium-bottom"
+    *ngIf="errorText.length > 0"
+  >
+    {{ errorText }}
+  </div>
   <ng-container *ngFor="let currency of currencies">
     <app-currency-item
       *ngIf="mainCurrencies.includes(currency.name) || showExtraCurrencies"

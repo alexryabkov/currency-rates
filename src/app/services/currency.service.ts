@@ -30,7 +30,7 @@ export class CurrencyService implements OnDestroy {
         console.error('Error while fetching data', err);
         throw 'Error while fetching data' + err;
       }),
-      retry({ delay: INTERVAL }),
+      retry({ count: 2, delay: 2000 }),
       share(),
       takeUntil(this.stopPolling)
     );

@@ -18,18 +18,24 @@ export class CurrenciesComponent implements OnDestroy {
   mainCurrencies: CurrencyNames[] = MAIN_CURRENCIES;
   showExtraCurrencies = false;
   subscriptions = new Subscription();
+  errorText = '';
 
   constructor(
     private currencyService: CurrencyService,
     private uiService: UiService
   ) {
     this.subscriptions.add(
-      this.currencyService
-        .getCurrencies()
-        .subscribe(
-          (data) =>
-            (this.currencies = this.processCurrencyData(data, this.currencies))
-        )
+      this.currencyService.getCurrencies().subscribe({
+        next: (data) => {
+          {
+            this.errorText = '';
+            this.currencies = this.processCurrencyData(data, this.currencies);
+          }
+        },
+        error: () =>
+          (this.errorText =
+            'Cannot get the data from the remote server! Please refresh the page'),
+      })
     );
 
     this.subscriptions.add(
