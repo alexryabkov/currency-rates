@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UiService } from 'src/app/services/ui.service';
 
@@ -7,7 +7,7 @@ import { UiService } from 'src/app/services/ui.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   title = 'Currency Rates to RUB';
   showExtraCurrencies = false;
   subscription: Subscription;
@@ -17,8 +17,6 @@ export class HeaderComponent implements OnInit {
       .onToggle()
       .subscribe((value) => (this.showExtraCurrencies = value));
   }
-
-  ngOnInit(): void {}
 
   toggleExtraCurrencies() {
     this.uiService.toggleExtraCurrencies();

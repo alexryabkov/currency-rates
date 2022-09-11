@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-date-time',
   templateUrl: './date-time.component.html',
   styleUrls: ['./date-time.component.scss'],
 })
-export class DateTimeComponent implements OnInit {
+export class DateTimeComponent implements OnInit, OnDestroy {
   time = new Date();
   intervalId: ReturnType<typeof setInterval> | number = 0;
 

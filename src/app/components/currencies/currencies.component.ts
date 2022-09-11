@@ -92,8 +92,6 @@ export class CurrenciesComponent implements OnDestroy {
     return processedData;
   }
 
-  ngOnInit(): void {}
-
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

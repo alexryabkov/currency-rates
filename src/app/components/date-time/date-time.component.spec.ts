@@ -8,9 +8,8 @@ describe('DateTimeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DateTimeComponent ]
-    })
-    .compileComponents();
+      declarations: [DateTimeComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DateTimeComponent);
     component = fixture.componentInstance;
