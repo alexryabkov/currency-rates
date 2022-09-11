@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, timer, retry, share } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { catchError, switchMap, takeUntil } from 'rxjs/operators';
 import { FetchedCurrencyData } from 'src/app/types/fetched-currency-data';
 import { ALL_CURRENCIES, BASE_CURRENCY } from '../currency-data';
 import { environment } from 'src/environments/environment';
@@ -26,7 +26,11 @@ export class CurrencyService implements OnDestroy {
   constructor(private http: HttpClient) {
     this.currencies = timer(0, INTERVAL).pipe(
       switchMap(() => this.requestCurrencyData()),
-      retry(),
+      catchError((err) => {
+        console.error('Error while fetching data', err);
+        throw 'Error while fetching data' + err;
+      }),
+      retry({ delay: INTERVAL }),
       share(),
       takeUntil(this.stopPolling)
     );
