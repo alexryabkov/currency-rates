@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 
 @Component({
@@ -6,13 +6,11 @@ import { Subscription, timer } from 'rxjs';
   templateUrl: './date-time.component.html',
   styleUrls: ['./date-time.component.scss'],
 })
-export class DateTimeComponent implements OnInit, OnDestroy {
+export class DateTimeComponent implements OnDestroy {
   time = new Date();
-  subscription = new Subscription();
+  subscription: Subscription;
 
-  constructor() {}
-
-  ngOnInit(): void {
+  constructor() {
     this.subscription = timer(1000, 1000).subscribe(() => this.updateTime());
   }
 
