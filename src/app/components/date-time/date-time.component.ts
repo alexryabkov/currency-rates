@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'app-date-time',
@@ -7,19 +8,20 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class DateTimeComponent implements OnInit, OnDestroy {
   time = new Date();
-  intervalId: ReturnType<typeof setInterval> | number = 0;
+  subscription = new Subscription();
 
   constructor() {}
 
   ngOnInit(): void {
-    this.intervalId = setInterval(() => {
-      this.time = new Date();
-    }, 1000);
+    this.subscription = timer(1000, 1000).subscribe(() => this.updateTime());
+  }
+
+  updateTime() {
+    console.log('Update timer');
+    this.time = new Date();
   }
 
   ngOnDestroy(): void {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+    this.subscription.unsubscribe();
   }
 }
