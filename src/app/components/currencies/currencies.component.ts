@@ -13,7 +13,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./currencies.component.scss'],
 })
 export class CurrenciesComponent implements OnDestroy {
-  currencies: CurrencyInfo[] = [];
+  storageKey = 'currencyData';
+  storedData: string | null = localStorage.getItem(this.storageKey);
+  currencies: CurrencyInfo[] = this.storedData
+    ? JSON.parse(this.storedData)
+    : [];
   allCurrencies: CurrencyNames[] = ALL_CURRENCIES;
   mainCurrencies: CurrencyNames[] = MAIN_CURRENCIES;
   showExtraCurrencies = false;
@@ -30,6 +34,10 @@ export class CurrenciesComponent implements OnDestroy {
           {
             this.errorText = '';
             this.currencies = this.processCurrencyData(data, this.currencies);
+            localStorage.setItem(
+              this.storageKey,
+              JSON.stringify(this.currencies)
+            );
           }
         },
         error: () =>
@@ -73,7 +81,8 @@ export class CurrenciesComponent implements OnDestroy {
         const currency: CurrencyInfo = currentData.filter(
           (curr) => curr.name === name
         )[0];
-        rateChange = exchangeRate - currency.exchangeRate;
+        rateChange =
+          Math.round((exchangeRate - currency.exchangeRate) * 1e2) / 1e2;
       }
 
       processedData.push({ name, exchangeRate, rateChange });
