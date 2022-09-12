@@ -18,7 +18,7 @@ import { CurrencyNames } from 'src/app/types/currency-names';
     </div>
   `,
 })
-class CurrencyItemComponent {
+class CurrencyItemStubComponent {
   @Input() currency: CurrencyInfo = {
     name: CurrencyNames.NONE,
     exchangeRate: 0,
@@ -60,7 +60,7 @@ describe('CurrenciesComponent', () => {
     ]);
     MockCurrencyService.getCurrencies.and.returnValue(of(fetchedData));
     await TestBed.configureTestingModule({
-      declarations: [CurrenciesComponent, CurrencyItemComponent],
+      declarations: [CurrenciesComponent, CurrencyItemStubComponent],
       providers: [
         UiService,
         { provide: CurrencyService, useValue: MockCurrencyService },
