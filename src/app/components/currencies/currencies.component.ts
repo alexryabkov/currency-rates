@@ -28,6 +28,10 @@ export class CurrenciesComponent implements OnDestroy {
     private currencyService: CurrencyService,
     private uiService: UiService
   ) {
+    this.makeSubscriptions();
+  }
+
+  private makeSubscriptions() {
     this.subscriptions.add(
       this.currencyService.getCurrencies().subscribe({
         next: (data) => {
