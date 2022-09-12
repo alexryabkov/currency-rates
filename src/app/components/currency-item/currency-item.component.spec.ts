@@ -21,7 +21,7 @@ describe('CurrencyItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create', () => {
+  it('should have default data', () => {
     expect(component.currency).toEqual({
       name: CurrencyNames.NONE,
       exchangeRate: 0,
@@ -91,7 +91,7 @@ describe('CurrencyItemComponent', () => {
     );
   });
 
-  it('should show no arrow and black rate text for zero rate change', () => {
+  it('should show no arrow for zero rate change', () => {
     component.currency = {
       name: CurrencyNames.USD,
       exchangeRate: 60,
