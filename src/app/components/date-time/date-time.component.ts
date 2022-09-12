@@ -11,11 +11,11 @@ export class DateTimeComponent implements OnDestroy {
   subscription: Subscription;
 
   constructor() {
-    this.subscription = timer(1000, 1000).subscribe(() => this.updateTime());
+    this.subscription = this.updateTime();
   }
 
   updateTime() {
-    this.time = new Date();
+    return timer(1000, 1000).subscribe(() => (this.time = new Date()));
   }
 
   ngOnDestroy(): void {

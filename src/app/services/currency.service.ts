@@ -24,7 +24,11 @@ export class CurrencyService implements OnDestroy {
   private apiUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) {
-    this.currencies = timer(0, INTERVAL).pipe(
+    this.currencies = this.startPolling();
+  }
+
+  startPolling(): Observable<FetchedCurrencyData> {
+    return timer(0, INTERVAL).pipe(
       switchMap(() => this.requestCurrencyData()),
       catchError((err) => {
         console.error('Error while fetching data', err);
