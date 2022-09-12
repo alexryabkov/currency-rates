@@ -28,7 +28,7 @@ export class CurrencyService implements OnDestroy {
       switchMap(() => this.requestCurrencyData()),
       catchError((err) => {
         console.error('Error while fetching data', err);
-        throw 'Error while fetching data' + err;
+        throw err;
       }),
       retry({ count: 2, delay: 2000 }),
       share(),

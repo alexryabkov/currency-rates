@@ -40,9 +40,12 @@ export class CurrenciesComponent implements OnDestroy {
             );
           }
         },
-        error: () =>
-          (this.errorText =
-            'Cannot get the data from the remote server! Please refresh the page'),
+        error: (error) => {
+          this.errorText =
+            error.status === 429
+              ? 'Request rate limit exceeded! Please contact development team'
+              : 'Cannot get the data from the remote server! Please refresh the page';
+        },
       })
     );
 
