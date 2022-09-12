@@ -15,7 +15,6 @@ export class DateTimeComponent implements OnDestroy {
   }
 
   updateTime() {
-    console.log('Update timer');
     this.time = new Date();
   }
 
