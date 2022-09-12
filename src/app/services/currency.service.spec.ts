@@ -92,24 +92,20 @@ describe('CurrencyService', () => {
       subscription = service
         .startPolling()
         .subscribe((data) => expect(data).toEqual(response));
-
+      tick(5000);
       subscription.unsubscribe();
     }));
 
     it('should propagate an error in case of return data failure', fakeAsync(() => {
-      let result: string = '';
       const errorMsg = 'Testing error';
 
       spyOn(service, 'requestCurrencyData').and.returnValue(
         throwError(() => new Error(errorMsg))
       );
-
-      subscription = service
-        .startPolling()
-        .subscribe({ error: (e) => (result = e.toString()) });
-
+      subscription = service.startPolling().subscribe({
+        error: (e) => expect(e.toString()).toContain(errorMsg),
+      });
       tick(5000);
-      expect(result).toContain(errorMsg);
       subscription.unsubscribe();
     }));
   });
