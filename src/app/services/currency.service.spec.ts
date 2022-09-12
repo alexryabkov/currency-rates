@@ -1,4 +1,4 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpRequest, HttpParams } from '@angular/common/http';
 import {
   HttpClientTestingModule,
@@ -12,6 +12,21 @@ import { FetchedCurrencyData } from 'src/app/types/fetched-currency-data';
 
 describe('CurrencyService', () => {
   let service: CurrencyService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+    });
+    service = TestBed.inject(CurrencyService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
+
+describe('CurrencyService#requestCurrencyData', () => {
+  let service: CurrencyService;
   let backend: HttpTestingController;
 
   beforeEach(() => {
@@ -24,11 +39,7 @@ describe('CurrencyService', () => {
 
   afterEach(() => backend.verify());
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-
-  it('#requestCurrencyData() should send proper GET request', () => {
+  it('should send proper GET request', () => {
     service.requestCurrencyData().subscribe();
 
     const testRequest = backend.expectOne(
@@ -42,7 +53,7 @@ describe('CurrencyService', () => {
     testRequest.flush({});
   });
 
-  it('#requestCurrencyData() should get proper data', () => {
+  it('should get proper data', () => {
     const timestamp = Date.now();
     const params = new HttpParams()
       .set('base', BASE_CURRENCY)
