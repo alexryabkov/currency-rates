@@ -132,49 +132,53 @@ describe('CurrenciesComponent', () => {
     }
   });
 
-  it('should log error if fetched data contains unexpected currency', async () => {
-    await setUp();
-    const wrongCurr = 'NOK';
-    spyOn(console, 'error').and.callFake((...args) =>
-      expect(args[0]).toContain(
-        `Currency ${wrongCurr} is not in the list of allowed currencies`
-      )
+  it('should set correct #errorText in case of rate limit exceeded (status=429)', async () => {
+    await setUp(429);
+    fixture.detectChanges();
+    expect(component.errorText).toEqual(
+      'Request rate limit exceeded! Please contact development team'
     );
-    let currentData: CurrencyInfo[] = [];
-    const dataWithError = {
-      ...fetchedData,
-      rates: { USD: rate, [wrongCurr]: rate },
-    };
-    component.processCurrencyData(dataWithError, currentData);
-    expect(console.error).toHaveBeenCalled();
   });
 
-  it('should calculate new data based on the previous one if applicable', async () => {
-    await setUp();
-    let currentData: CurrencyInfo[] = [
-      { name: CurrencyNames.USD, exchangeRate: 40, rateChange: 0 },
-    ];
-    const newData = { ...fetchedData, rates: { USD: 0.02 } };
-    const calculatedData = component.processCurrencyData(newData, currentData);
-    expect(calculatedData).toEqual([
-      { name: CurrencyNames.USD, exchangeRate: 50, rateChange: 10 },
-    ]);
+  it('should set correct #errorText in case of data fetching error', async () => {
+    await setUp(500);
+    fixture.detectChanges();
+    expect(component.errorText).toEqual(
+      'Cannot get the data from the remote server! Please refresh the page'
+    );
   });
 
-  describe('#makeSubscriptions', () => {
-    it('should set correct #errorText in case of rate limit exceeded (status=429)', async () => {
-      await setUp(429);
-      fixture.detectChanges();
-      expect(component.errorText).toEqual(
-        'Request rate limit exceeded! Please contact development team'
+  describe('#processCurrencyData', () => {
+    it('should log error if fetched data contains unexpected currency', async () => {
+      await setUp();
+      const wrongCurr = 'NOK';
+      spyOn(console, 'error').and.callFake((...args) =>
+        expect(args[0]).toContain(
+          `Currency ${wrongCurr} is not in the list of allowed currencies`
+        )
       );
+      let currentData: CurrencyInfo[] = [];
+      const dataWithError = {
+        ...fetchedData,
+        rates: { USD: rate, [wrongCurr]: rate },
+      };
+      component.processCurrencyData(dataWithError, currentData);
+      expect(console.error).toHaveBeenCalled();
     });
-    it('should set correct #errorText in case of data fetching error', async () => {
-      await setUp(500);
-      fixture.detectChanges();
-      expect(component.errorText).toEqual(
-        'Cannot get the data from the remote server! Please refresh the page'
+
+    it('should calculate new data based on the previous one if applicable', async () => {
+      await setUp();
+      let currentData: CurrencyInfo[] = [
+        { name: CurrencyNames.USD, exchangeRate: 40, rateChange: 0 },
+      ];
+      const newData = { ...fetchedData, rates: { USD: 0.02 } };
+      const calculatedData = component.processCurrencyData(
+        newData,
+        currentData
       );
+      expect(calculatedData).toEqual([
+        { name: CurrencyNames.USD, exchangeRate: 50, rateChange: 10 },
+      ]);
     });
   });
 });
