@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, Input } from '@angular/core';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { CurrenciesComponent } from './currencies.component';
 import { UiService } from 'src/app/services/ui.service';
@@ -8,6 +8,7 @@ import { CurrencyService } from 'src/app/services/currency.service';
 import { ALL_CURRENCIES, MAIN_CURRENCIES } from 'src/app/currency-data';
 import { CurrencyInfo } from 'src/app/types/currency-info';
 import { CurrencyNames } from 'src/app/types/currency-names';
+import { FetchedCurrencyData } from 'src/app/types/fetched-currency-data';
 @Component({
   selector: 'app-currency-item',
   template: `
@@ -41,7 +42,7 @@ describe('CurrenciesComponent', () => {
   const timestamp = Date.now();
   const rate = 0.02;
   const change = 0;
-  const fetchedData = {
+  const fetchedData: FetchedCurrencyData = {
     success: true,
     timestamp,
     date: new Date(timestamp).toISOString().split('T')[0],
@@ -54,11 +55,19 @@ describe('CurrenciesComponent', () => {
     rateChange: change,
   }));
 
-  beforeEach(async () => {
+  // We have to replace "beforeEach" with custom "setUp" function to be able to
+  // provide different return values via MockCurrencyService
+  async function setUp(returnErrorStatusCode = 0) {
     const MockCurrencyService = jasmine.createSpyObj('CurrencyService', [
       'getCurrencies',
     ]);
-    MockCurrencyService.getCurrencies.and.returnValue(of(fetchedData));
+    if (returnErrorStatusCode !== 0) {
+      MockCurrencyService.getCurrencies.and.returnValue(
+        throwError(() => ({ status: returnErrorStatusCode }))
+      );
+    } else {
+      MockCurrencyService.getCurrencies.and.returnValue(of(fetchedData));
+    }
     await TestBed.configureTestingModule({
       declarations: [CurrenciesComponent, CurrencyItemStubComponent],
       providers: [
@@ -70,17 +79,20 @@ describe('CurrenciesComponent', () => {
     fixture = TestBed.createComponent(CurrenciesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }
 
-  it('should create', () => {
+  it('should create', async () => {
+    await setUp();
     expect(component).toBeTruthy();
   });
 
-  it('should get data after component initialized', () => {
+  it('should get data after component initialized', async () => {
+    await setUp();
     expect(component.currencies).toEqual(finalData);
   });
 
-  it('should display all currencies if showExtraCurrencies=true', () => {
+  it('should display all currencies if showExtraCurrencies=true', async () => {
+    await setUp();
     component.showExtraCurrencies = true;
     fixture.detectChanges();
     const currencyItems = fixture.nativeElement.querySelectorAll('.item');
@@ -98,7 +110,8 @@ describe('CurrenciesComponent', () => {
     }
   });
 
-  it('should display only "main" currencies if showExtraCurrencies=false', () => {
+  it('should display only "main" currencies if showExtraCurrencies=false', async () => {
+    await setUp();
     component.showExtraCurrencies = false;
     fixture.detectChanges();
     const currencyItems = fixture.nativeElement.querySelectorAll('.item');
@@ -119,7 +132,8 @@ describe('CurrenciesComponent', () => {
     }
   });
 
-  it('should log error if fetched data contains unexpected currency', () => {
+  it('should log error if fetched data contains unexpected currency', async () => {
+    await setUp();
     const wrongCurr = 'NOK';
     spyOn(console, 'error').and.callFake((...args) =>
       expect(args[0]).toContain(
@@ -135,7 +149,8 @@ describe('CurrenciesComponent', () => {
     expect(console.error).toHaveBeenCalled();
   });
 
-  it('should calculate new data based on the previous one if applicable', () => {
+  it('should calculate new data based on the previous one if applicable', async () => {
+    await setUp();
     let currentData: CurrencyInfo[] = [
       { name: CurrencyNames.USD, exchangeRate: 40, rateChange: 0 },
     ];
@@ -144,5 +159,22 @@ describe('CurrenciesComponent', () => {
     expect(calculatedData).toEqual([
       { name: CurrencyNames.USD, exchangeRate: 50, rateChange: 10 },
     ]);
+  });
+
+  describe('#makeSubscriptions', () => {
+    it('should set correct #errorText in case of rate limit exceeded (status=429)', async () => {
+      await setUp(429);
+      fixture.detectChanges();
+      expect(component.errorText).toEqual(
+        'Request rate limit exceeded! Please contact development team'
+      );
+    });
+    it('should set correct #errorText in case of data fetching error', async () => {
+      await setUp(500);
+      fixture.detectChanges();
+      expect(component.errorText).toEqual(
+        'Cannot get the data from the remote server! Please refresh the page'
+      );
+    });
   });
 });
